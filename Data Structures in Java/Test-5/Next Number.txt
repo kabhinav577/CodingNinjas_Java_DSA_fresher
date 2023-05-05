@@ -1,0 +1,145 @@
+Next Number
+Send Feedback
+Given a large number represented in the form of a linked list. Write code to increment the number by 1 in-place(i.e. without using extra space).
+Note: You don't need to print the elements, just update the elements and return the head of updated LL.
+Input Constraints:
+1 <= Length of Linked List <=10^6.
+Input format :
+Line 1 : Linked list elements (separated by space and terminated by -1)
+Output Format :
+Line 1: Updated linked list elements 
+Sample Input 1 :
+3 9 2 5 -1
+Sample Output 1 :
+3 9 2 6
+Sample Input 2 :
+9 9 9 -1
+Sample Output 1 :
+1 0 0 0 
+
+
+/////////////////-------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+/*************** 
+ * Following is the Node class already written 
+class LinkedListNode<T> {
+	T data;
+	LinkedListNode<T> next;
+
+	public LinkedListNode(T data) {
+		this.data = data;
+	}
+}
+ ***************/
+
+public class Solution {
+
+
+	public static LinkedListNode<Integer> newNode(int data)
+    {
+        LinkedListNode<Integer> new_node = new LinkedListNode<>(data);
+        new_node.next = null;
+        return new_node;
+    }
+
+    ///// Next Number 
+    public static LinkedListNode<Integer> nextLargeNumber(LinkedListNode<Integer> head) {
+        
+        LinkedListNode<Integer> last = null;
+		LinkedListNode<Integer> current_node = head;
+		// Through this loop we will find the last non-nine node.
+		while (current_node.next != null) {
+			if (current_node.data != 9) {
+				last = current_node;
+			}
+			current_node = current_node.next;
+		}
+		if (current_node.data != 9) {
+			current_node.data = current_node.data + 1;
+			return head;
+		}
+		if (last == null) {
+			// 1 extra node will be needed.
+			last = newNode(1);
+			last.next = head;
+			head = last;
+			// then make every node 0
+			last = last.next;
+			while (last != null) {
+				last.data = 0;
+				last = last.next;
+			}
+			return head;
+		}
+
+		last.data = last.data + 1;
+		last = last.next;
+		while (last != null) {
+			last.data = 0;
+			last = last.next;
+		}
+		return head;
+	}
+
+
+
+}
+
+
+
+///////////////---------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+USING REVERSE THE LINKED LIST AND ADDING NUMBER IN FRONT AND RETURN THE REVERSE(HEAD):
+
+///////////////////--------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+/*************** 
+ * Following is the Node class already written 
+class LinkedListNode<T> {
+	T data;
+	LinkedListNode<T> next;
+
+	public LinkedListNode(T data) {
+		this.data = data;
+	}
+}
+ ***************/
+
+public class Solution {
+
+
+	public static LinkedListNode<Integer> reverse(LinkedListNode<Integer> head) {
+            LinkedListNode<Integer> cur = head;
+            LinkedListNode<Integer> prev = null;
+			while(cur != null) {
+				LinkedListNode<Integer> temp = cur.next;
+				cur.next = prev;
+				prev = cur;
+				cur = temp;
+			}
+			return prev;
+	}
+
+    ///// Next Number 
+    public static LinkedListNode<Integer> nextLargeNumber(LinkedListNode<Integer> head) {
+        head = reverse(head);
+		int carry = 1, num;
+		LinkedListNode<Integer> ptr = head, prev = null;
+		while(ptr != null) {
+			num = ((ptr.data) + carry) % 10;
+			carry = ((ptr.data) + carry) / 10;
+			ptr.data = num;
+			prev = ptr;
+			ptr = ptr.next;
+		}
+
+		if(carry == 1) {
+			LinkedListNode<Integer> tail = new LinkedListNode<>(carry);
+			prev.next = tail;
+		}
+       return reverse(head);
+	}
+
+
+
+}
