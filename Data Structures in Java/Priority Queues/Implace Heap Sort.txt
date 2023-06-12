@@ -1,0 +1,160 @@
+Inplace Heap Sort
+Send Feedback
+Given an integer array of size N. Sort this array (in decreasing order) using heap sort.
+Note: Space complexity should be O(1).
+Input Format:
+The first line of input contains an integer, that denotes the value of the size of the array or N.
+The following line contains N space separated integers, that denote the value of the elements of the array.
+Output Format :
+The first and only line of output contains array elements after sorting. The elements of the array in the output are separated by single space.
+Constraints :
+1 <= n <= 10^6
+Time Limit: 1 sec
+Sample Input 1:
+6 
+2 6 8 5 4 3
+Sample Output 1:
+8 6 5 4 3 2
+
+
+
+////////////////////////==========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+public class Solution {
+
+    public static void insertMin(int arr[], int i) {
+		int childIndex = i;
+		int parentIndex = (i - 1) / 2;
+        
+		while(childIndex > 0) {
+			if(arr[parentIndex] > arr[childIndex]) {
+				int temp = arr[parentIndex];
+				arr[parentIndex] = arr[childIndex];
+				arr[childIndex] = temp;
+				childIndex = parentIndex;
+				parentIndex = (childIndex - 1) / 2;
+			}
+			else 
+				return;
+		}
+	}
+
+	public static int removeMin(int arr[], int n) {  // n is a Heap size
+        int temp = arr[0];
+		arr[0] = arr[n - 1];
+		n--;
+		int leftChild = 1;
+		int rightChild = 2;
+
+		int parentIndex = 0;
+		int minIndex = parentIndex;
+
+		while(leftChild < n) {
+			if(arr[leftChild] < arr[minIndex]) {
+				minIndex = leftChild;
+			}
+			if(rightChild < n && arr[rightChild] < arr[minIndex]) {
+				minIndex = rightChild;
+			}
+			if(parentIndex == minIndex) {
+				break;
+			} else {
+				int temp1 = arr[parentIndex];
+				arr[parentIndex] = arr[minIndex];
+				arr[minIndex] = temp1;
+				parentIndex = minIndex;
+			    leftChild = 2 * parentIndex + 1;
+			    rightChild = 2 * parentIndex + 2;
+			}
+		}
+		return temp;
+	}
+	public static void inplaceHeapSort(int arr[]) {
+		int n = arr.length;
+		if(n == 0 || n == 1) return ;
+
+		for(int i = 0 ; i < n; i++) {
+			insertMin(arr, i);
+		}
+
+		for(int i = 0 ; i < n; i++) {
+			arr[n-1 - i] = removeMin(arr, n - i);
+		}
+	}
+	}
+
+
+//////////////////===================================>>>>>>>>>>>>>>>>>>>>>
+
+
+public class Solution {
+
+    public static void insertMin(int arr[], int i) {
+		int childIndex = i;
+		int parentIndex = (i - 1) / 2;
+        
+		while(childIndex > 0) {
+			if(arr[parentIndex] > arr[childIndex]) {
+				int temp = arr[parentIndex];
+				arr[parentIndex] = arr[childIndex];
+				arr[childIndex] = temp;
+				childIndex = parentIndex;
+				parentIndex = (childIndex - 1) / 2;
+			}
+			else 
+				return;
+		}
+	}
+
+
+	public static void inplaceHeapSort(int arr[]) {
+		int n = arr.length;
+		if(n == 0 || n == 1) return ;
+
+		for(int i = 0 ; i < n; i++) {
+			insertMin(arr, i);
+		}
+
+        for(int i = n - 1; i >= 0; i--) {
+			int min = arr[0];
+			arr[0] = arr[i];
+			arr[i] = min;
+
+			int parentIndex = 0;
+			int leftChildIndex = 2 * parentIndex + 1;
+			int rightChildIndex = 2 * parentIndex + 2;
+
+			while(parentIndex < i) {
+				int minIndex = parentIndex;
+				int minValue = arr[minIndex];
+
+				if(leftChildIndex < i) {
+					int leftChild = arr[leftChildIndex];
+					if(leftChild < minValue) {
+						minIndex = leftChildIndex;
+						minValue = arr[minIndex];
+					}
+				}
+
+				if(rightChildIndex < i) {
+					int rightChild = arr[rightChildIndex];
+					if(rightChild < minValue) {
+						minIndex = rightChildIndex;
+						minValue = arr[minIndex];
+					}
+				}
+
+				if(parentIndex == minIndex) {
+					break;
+				} else {
+					arr[minIndex] = arr[parentIndex];
+					arr[parentIndex] = minValue;
+				}
+
+				parentIndex = minIndex;
+				leftChildIndex = 2 * parentIndex + 1;
+				rightChildIndex = 2 * parentIndex + 2;
+			}
+		}
+		
+	}
