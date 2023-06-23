@@ -1,0 +1,68 @@
+Return subset of an array
+Send Feedback
+Given an integer array (of length n), find and return all the subsets of input array.
+Subsets are of length varying from 0 to n, that contain elements of the array. But the order of elements should remain same as in the input array.
+
+
+Note : The order of subsets are not important.
+
+
+Input format :
+
+Line 1 : Size of array
+
+Line 2 : Array elements (separated by space)
+
+Sample Input:
+3
+15 20 12
+Sample Output:
+[] (this just represents an empty array, don't worry about the square brackets)
+12 
+20 
+20 12 
+15 
+15 12 
+15 20 
+15 20 12 
+
+
+///////////////////===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+import java.util.ArrayList;
+
+public class solution {
+
+	// Return a 2D array that contains all the subsets
+	public static int[][] subsets(int input[]) {
+		// Write your code here
+		ArrayList<ArrayList<Integer>> allSubsets = new ArrayList<>();
+        generateSubsets(input, 0, new ArrayList<Integer>(), allSubsets);
+
+        int [][] resultArray = new int[allSubsets.size()][];
+
+        for(int i = 0; i < allSubsets.size(); i++) {
+            ArrayList<Integer> list = allSubsets.get(i);
+            int []arrTemp = new int[list.size()];
+            for(int j = 0; j < list.size(); j++) {
+                arrTemp[j] = list.get(j);
+            }
+            resultArray[i] = arrTemp;
+        }
+        return resultArray;    
+
+	}
+
+	private static void generateSubsets(int[] arr, int index, ArrayList<Integer> currentSubset, ArrayList<ArrayList<Integer>> allSubsets) {
+        if (index == arr.length) {
+            allSubsets.add(currentSubset);
+            return;
+        }
+		
+        generateSubsets(arr, index + 1, currentSubset, allSubsets);
+        ArrayList<Integer> newSubset = new ArrayList<>(currentSubset); // Create new ArrayList
+        newSubset.add(arr[index]);  // Adding all possible Subset
+        generateSubsets(arr, index + 1, newSubset, allSubsets);
+    }
+}

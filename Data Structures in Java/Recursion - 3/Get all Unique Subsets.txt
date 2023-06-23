@@ -1,0 +1,94 @@
+Get All Unique Subsets
+Send Feedback
+You are given an integer array of size 'n'.
+
+
+Your task is to find and return all the unique subsets of the input array.
+
+
+Subsets are arrays of length varying from 0 to 'n', that contain elements of the array. But the order of elements should remain the same as in the input array.
+
+
+Note:
+The order of subsets is not important. You can return the subsets in any order. However, in the output, you will see the subsets in lexicographically sorted order.
+
+
+Example:
+Input: 'n' = 3, 'arr' = [15, 20, 12]
+
+Output: [[], [15], [20], [12], [15, 20], [15, 12], [20, 12], [15, 20, 12]]
+
+Sample Explanation: Since there are no repeated numbers, a total of 8 subsets are generated.
+Input Format :
+The first line will contain the value of ‘n’.
+
+The second line will contain n integers, denoting the array 'arr' elements.
+Output format :
+Return all unique subsets in any order.
+Note :
+You don't need to print anything. It has already been taken care of. Just implement the given function.
+Sample Input 1 :
+3
+15 20 12
+Sample Output 1 :
+[] (this represents an empty array)
+15
+20
+12
+15 20
+15 12
+20 12
+15 20 12
+Explanation Of Sample Input 1 :
+Since there are no repeated numbers, a total of 8 subsets are generated.
+Sample Input 2 :
+3
+1 1 2
+Sample Output 2 :
+[]
+1
+2
+1 1
+1 2
+1 1 2
+Explanation Of Sample Input 2 :
+Since there are repeated numbers, the total number of unique subsets is 6.
+Expected Time Complexity :
+The expected time complexity is O(k * 2^n), where n is the size of the array and 'k' is the average size of a subset.
+Expected Space Complexity :
+The expected time complexity is O(k * 2^n), where n is the size of the array and 'k' is the average size of a subset.
+Constraints :
+1 <= n <= 15
+1 <= arr[i] <= 100
+
+Time Limit: 1 sec
+
+
+
+
+//////////////////////////================================>>>>>>>>>>>>>>>>>>>>>>>
+
+import java.util.*;
+
+public class solution {
+	public static void printSubsets(int input[]) {
+		// Write your code here
+       List<Integer> list = new ArrayList<>();
+	   printSubsetsHelper(input, 0, list);
+	}
+
+	private static void printSubsetsHelper(int arr[], int index , List<Integer> list) {
+		if(index == arr.length) {
+			for(int i = 0; i < list.size(); i++ ) {
+				System.out.print(list.get(i)+" ");
+			}
+			System.out.println();
+			return;
+		}
+
+		printSubsetsHelper(arr, index+1, list);
+		List<Integer> temp = new ArrayList<>(list);
+		temp.add(arr[index]);
+		printSubsetsHelper(arr, index+1, temp);
+	}
+}

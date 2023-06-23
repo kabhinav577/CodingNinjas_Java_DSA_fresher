@@ -1,0 +1,45 @@
+Return Permutations of a String
+Send Feedback
+Given a string, find and return all the possible permutations of the input string.
+Note : The order of permutations are not important.
+Sample Input :
+abc
+Sample Output :
+abc
+acb
+bac
+bca
+cab
+cba
+
+
+
+//////////////////////=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+public class solution {
+	
+
+	public static String[] permutationOfString(String input){
+		// Write your code here
+		if(input.length() == 0){
+            String[] ans = {""};
+            return ans;
+        }
+
+        String[] smallAns = permutationOfString(input.substring(1));
+        String[] ans = new String[smallAns.length * (input.length())];
+        int k = 0;
+
+        for(int i = 0; i < smallAns.length; i++){
+            String currentString = smallAns[i];
+            for(int j = 0; j < input.length(); j++){
+                String newString = currentString.substring(0, j) + input.charAt(0) + currentString.substring(j);
+                ans[k++] = newString;
+            }
+        }
+
+        return ans;
+	}
+	
+}

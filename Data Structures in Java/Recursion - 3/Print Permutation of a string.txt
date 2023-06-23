@@ -1,0 +1,44 @@
+Print Permutations of a String
+Send Feedback
+Given a string, find and print all the possible permutations of the input string.
+Note : The order of permutations are not important. Just print them in different lines.
+Sample Input :
+abc
+Sample Output :
+abc
+acb
+bac
+bca
+cab
+cba
+
+
+
+/////////////////////////==========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+public class solution {
+
+
+    public static void permutationsHelper(String str, String ans) {
+		if (str.length() == 0) {
+			System.out.println(ans);
+			return;
+		}
+
+              for(int i = 0; i < str.length(); i++) {
+                     char ch = str.charAt(i);
+
+                     String first = str.substring(0, i);
+                     String second = str.substring(i+1);
+                     String newStr =first + second;
+
+                     permutationsHelper(newStr, ans + ch);
+              }
+	}
+
+	public static void permutations(String input){
+          permutationsHelper(input, "");
+	}
+}
