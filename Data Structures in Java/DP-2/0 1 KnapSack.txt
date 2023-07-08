@@ -1,0 +1,72 @@
+0 1 Knapsack - Problem
+Send Feedback
+A thief robbing a store can carry a maximal weight of W into his knapsack. There are N items, and i-th item weigh 'Wi' and the value being 'Vi.' What would be the maximum value V, that the thief can steal?
+Input Format :
+The first line of the input contains an integer value N, which denotes the total number of items.
+
+The second line of input contains the N number of weights separated by a single space.
+
+The third line of input contains the N number of values separated by a single space.
+
+The fourth line of the input contains an integer value W, which denotes the maximum weight the thief can steal.
+Output Format :
+Print the maximum value of V that the thief can steal.
+Constraints :
+1 <= N <= 20
+1<= Wi <= 100
+1 <= Vi <= 100
+
+Time Limit: 1 sec
+Sample Input 1 :
+4
+1 2 4 5
+5 4 8 6
+5
+Sample Output 1 :
+13
+Sample Input 2 :
+5
+12 7 11 8 9
+24 13 23 15 16
+26
+Sample Output 2 :
+51
+
+
+////////////////////==================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+import java.util.*;
+public class Solution {
+
+public static int knapsack(int[] weights, int[] values, int n, int maxWeight) {
+ 
+		int dp[][] = new int [n+10][maxWeight + 10];
+ 
+		for (int row[] : dp)
+			Arrays.fill(row, -1);
+ 
+		return knapsack(weights, values, n, maxWeight, 0, dp);
+	}
+ 
+ 
+	public static int knapsack(int[] weights, int[] values, int n, int maxWeight, int idx, int dp[][]) {
+ 
+		if (idx == n)
+			return 0;
+ 
+ 
+		if (dp[idx][maxWeight] != -1)
+			return dp[idx][maxWeight];
+ 
+ 
+		int opt1 = 0;
+ 
+		if (weights[idx] <= maxWeight)
+			opt1 = values[idx] + knapsack(weights, values, n, maxWeight-weights[idx], idx + 1,dp);
+ 
+		int opt2 = knapsack(weights, values, n, maxWeight, idx + 1, dp);
+ 
+		return dp[idx][maxWeight] = Math.max(opt1, opt2);
+	}
+
+}

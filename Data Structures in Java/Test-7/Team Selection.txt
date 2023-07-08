@@ -1,0 +1,67 @@
+Team Selection
+Send Feedback
+CodingNinjasLand is hosting this edition of Kabaddi World Cup. Selection committee of CodingNinjasLand needs your help. They want to select a 12-membered team. You have to print all possible combinations of the team, so, that selectors can select any one combination for World Cup at GitNagar, CodingNinjasLand.
+Input Format
+First line contains N - (Integer)
+Second line contains N spaced integers which are player Id of players. Note that, all the N integers are given in sorted order.
+Constraints
+12<= N <= 20
+1<= A(i) <=1000
+Output Format
+Print the combinations in N lines.
+Sample Input 0
+13
+1 2 3 4 5 6 7 8 9 10 11 12 13
+Sample Output 0
+1 2 3 4 5 6 7 8 9 10 11 12
+1 2 3 4 5 6 7 8 9 10 11 13 
+1 2 3 4 5 6 7 8 9 10 12 13 
+1 2 3 4 5 6 7 8 9 11 12 13 
+1 2 3 4 5 6 7 8 10 11 12 13 
+1 2 3 4 5 6 7 9 10 11 12 13 
+1 2 3 4 5 6 8 9 10 11 12 13 
+1 2 3 4 5 7 8 9 10 11 12 13 
+1 2 3 4 6 7 8 9 10 11 12 13 
+1 2 3 5 6 7 8 9 10 11 12 13 
+1 2 4 5 6 7 8 9 10 11 12 13 
+1 3 4 5 6 7 8 9 10 11 12 13 
+2 3 4 5 6 7 8 9 10 11 12 13
+
+
+
+///////////////////////=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+import java.util.Scanner;
+
+public class Main {
+
+	
+	public static void printCombinations(int players[], int team[], int index, int count) {
+        if(count == 12) {
+            for(int i = 0; i < 12; i++) {  // Printing all the Possible Combination
+                System.out.print(team[i]+" ");
+            }
+            System.out.println();
+            return;
+        }
+        if(index == players.length) return;
+
+        team[count] = players[index];  // putting the value in team combination Array
+        printCombinations(players, team, index + 1, count + 1);
+        printCombinations(players, team, index + 1, count);
+    }
+	
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int players[] = new int[n];
+        for(int i = 0; i < n; i++) {
+            players[i] = sc.nextInt();
+        }
+        int team[] = new int[12];
+        printCombinations(players, team, 0, 0);
+
+        sc.close();
+    }
+
+}
